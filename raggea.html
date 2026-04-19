@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CC 28 AREA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #16a34a;
+            --light-green: #22c55e;
+            --dark-green: #15803d;
+            --neon-green: #4ade80;
+            --bg-white: #ffffff;
+            --bg-light: #f0fdf4;
+            --bg-glass: rgba(255, 255, 255, 0.75);
+            --text-dark: #1f2937;
+            --text-gray: #6b7280;
+            --shadow: 0 10px 40px rgba(22, 163, 74, 0.2);
+            --glow: 0 0 25px rgba(34, 197, 94, 0.5);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 40%, #dcfce7 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(22, 163, 74, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(74, 222, 128, 0.08) 0%, transparent 50%);
+            animation: bgMove 15s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes bgMove {
+            0%, 100% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.1) translate(20px, 20px); }
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 1000;
+            width: 50px;
+            height: 50px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(22, 163, 74, 0.3);
+            border-radius: 15px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: var(--shadow);
+        }
+
+        .hamburger:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: var(--glow);
+            border-color: var(--primary);
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+            transition: all 0.4s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100vh;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border-right: 2px solid rgba(22, 163, 74, 0.2);
+            z-index: 999;
+            transition: left 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            padding: 100px 30px;
+            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            margin: 20px 0;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: slideInMenu 0.5s forwards;
+        }
+
+        .sidebar.active ul li:nth-child(1) { animation-delay: 0.1s; }
+        .sidebar.active ul li:nth-child(2) { animation-delay: 0.2s; }
+        .sidebar.active ul li:nth-child(3) { animation-delay: 0.3s; }
+        .sidebar.active ul li:nth-child(4) { animation-delay: 0.4s; }
+        .sidebar.active ul li:nth-child(5) { animation-delay: 0.5s; }
+        .sidebar.active ul li:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes slideInMenu {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar ul li a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--primary), var(--light-green));
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .sidebar ul li a:hover::before {
+            width: 100%;
+        }
+
+        .sidebar ul li a:hover {
+            color: white;
+            transform: translateX(10px);
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-wrapper {
+            display: inline-block;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary);
+            box-shadow: 0 0 30px rgba(22, 163, 74, 0.4), 0 0 60px rgba(34, 197, 94, 0.2);
+            animation: float 3s ease-in-out infinite, pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(22, 163, 74, 0.4), 0 0 60px rgba(34, 197, 94, 0.2); }
+            50% { box-shadow: 0 0 50px rgba(22, 163, 74, 0.6), 0 0 90px rgba(34, 197, 94, 0.4); }
+        }
+
+        .logo-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: conic-gradient(from 0deg, var(--primary), var(--light-green), var(--neon-green), var(--primary));
+            border-radius: 50%;
+            z-index: -1;
+            animation: rotate 3s linear infinite;
+            filter: blur(15px);
+            opacity: 0.6;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--light-green) 50%, var(--neon-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* Card */
+        .card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(22, 163, 74, 0.15);
+            border-radius: 25px;
+            padding: 35px;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(22, 163, 74, 0.3);
+            border-color: var(--primary);
+        }
+
+        .card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-title::before {
+            content: '▸';
+            font-size: 2rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hamburger Menu -->
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="#home">🏠 Home</a></li>
+            <li><a href="#team-cowo">👥 Team Cowo</a></li>
+            <li><a href="#inti-lds">⭐ Inti LDS</a></li>
+            <li><a href="#info-wl">📸 Info WL</a></li>
+            <li><a href="#info-cc">📋 Info CC</a></li>
+            <li><a href="#rules">⚠️ Rules</a></li>
+        </ul>
+    </nav>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>    <!-- Main Content -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header" id="home">
+            <div class="logo-wrapper">
+                <img src="https://www.image2url.com/r2/default/images/1776606794112-7c8315a0-1d32-4183-8ea5-8d3d928197d5.jpg" alt="Logo CC 28 AREA" class="logo">
+            </div>
+            <h1 class="title">28 AREA</h1>
+            <p class="subtitle">Community Clan Official</p>
+        </header>
+
+        <!-- Team Cowo -->
+        <section class="card" id="team-cowo">
+            <h2 class="card-title">Team Cowo</h2>
+            <div class="member-grid" id="teamCowoList">
+                <div class="member-item">rafzz</div>
+                <div class="member-item">lukzz</div>
+                <div class="member-item">prhan</div>
+                <div class="member-item">adlii</div>
+                <div class="member-item">ridho</div>
+            </div>
+        </section>
+
+        <!-- Inti LDS -->
+        <section class="card" id="inti-lds">
+            <h2 class="card-title">Inti LDS</h2>
+            <div class="member-grid" id="intiLdsList">
+                <div class="member-item">oca</div>
+                <div class="member-item">qila</div>
+            </div>
+        </section>
+
+        <!-- Info WL - UPDATE FULL SCREEN -->
+        <section class="card" id="info-wl">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+                <h2 class="card-title" style="margin-bottom: 0;">Info WL</h2>
+                <button class="btn-fullscreen" onclick="openWLFullscreen()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                    </svg>
+                    Lihat Semua
+                </button>
+            </div>
+            
+            <!-- Gallery Preview - 3 item terakhir -->
+            <div class="wl-gallery" id="wlGallery">
+                <div class="wl-empty">Belum ada konten. Tambah lewat Admin Panel</div>
+            </div>
+        </section>
+
+        <!-- Info CC -->
+        <section class="card" id="info-cc">
+            <h2 class="card-title">Info CC</h2>
+            <ul class="info-list" id="infoCcList">
+                <li>
+                    <span class="info-label">Berdiri dari</span>
+                    <span class="info-value">01-04-2024</span>
+                </li>
+                <li>
+                    <span class="info-label">Founder</span>
+                    <span class="info-value">raff</span>
+                </li>
+                <li>
+                    <span class="info-label">Own B</span>
+                    <span class="info-value">lukzz alip</span>
+                </li>
+                <li>
+                    <span class="info-label">Own LDS</span>
+                    <span class="info-value">-1</span>
+                </li>
+                <li>
+                    <span class="info-label">Pengurus War</span>
+                    <span class="info-value">razz, ridho</span>
+                </li>
+                <li>
+                    <span class="info-label">Pengurus War LDS</span>
+                    <span class="info-value">oca ciwa</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Rules -->
+        <section class="rules-card" id="rules">
+            <h2 class="rules-title">RULES 28 AREA!!</h2>
+            <ul class="rules-list">
+                <li>No bisuu</li>
+                <li>Rajin war</li>
+                <li>No share link gb</li>
+                <li>Ga nimbrung 3 hari kick!!</li>
+            </ul>
+        </section>
+
+        <!-- TikTok Link -->
+        <section class="card" style="text-align: center;">
+            <h2 class="card-title" style="justify-content: center;">Link TT CC</h2>
+            <a href="https://www.tiktok.com/@ragage8?_r=1&_t=ZS-95eAyd86xJH" target="_blank" class="tiktok-btn">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 0 0 1 2.31-4.64 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                </svg>
+                @ragage8
+            </a>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2024 CC 28 AREA - All Rights Reserved</p>
+            <p style="margin-top: 10px; font-size: 0.85rem;">Made with 💚 by 28 AREA Team</p>
+        </footer>
+    </div>
+
+    <!-- Modal Fullscreen WL -->
+    <div class="fullscreen-modal" id="wlFullscreen">
+        <div class="fullscreen-header">
+            <h2>📸 Info WL - Full Gallery</h2>
+            <button class="btn-close-fullscreen" onclick="closeWLFullscreen()">✕</button>
+        </div>
+        <div class="fullscreen-content" id="fullscreenContent">
+            <!-- Konten diisi JS -->
+        </div>
+    </div>
+
+    <style>
+        /* Tombol Fullscreen */
+        .btn-fullscreen {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--light-green));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-fullscreen:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(22, 163, 74, 0.4);
+        }
+
+        /* Modal Fullscreen */
+        .fullscreen-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.97);
+            z-index: 9999;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .fullscreen-modal.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fullscreen-header {
+            position: sticky;
+            top: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--primary);
+            z-index: 10;
+        }
+
+        .fullscreen-header h2 {
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .btn-close-fullscreen {
+            width: 45px;
+            height: 45px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-close-fullscreen:hover {
+            background: #dc2626;
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .fullscreen-content {
+            padding: 40px 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* WL Item Fullscreen */
+        .wl-item-full {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(34, 197, 94, 0.3);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .wl-item-full img,
+        .wl-item-full video {
+            width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            background: black;
+        }
+
+        .wl-item-text {
+            color: white;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            padding: 20px;
+            background: rgba(22, 163, 74, 0.1);
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .wl-item-date {
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            margin-top: 15px;
+            text-align: right;
+        }
+
+        /* Member Grid */
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .member-item {
+            background: linear-gradient(135deg, var(--bg-white), var(--bg-light));
+            padding: 15px 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-dark);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-item::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(34, 197, 94, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+
+        .member-item:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .member-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(22, 163, 74, 0.25);
+            color: var(--primary);
+        }
+
+        /* Info List */
+        .info-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .info-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, var(--bg-white), var(--bg-light));
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .info-list li:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(22, 163, 74, 0.15);
+            border-left-width: 8px;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        .info-value {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.05rem;
+        }
+
+        /* Rules */
+        .rules-card {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            border: 2px solid #ef4444;
+            border-radius: 25px;
+            padding: 35px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rules-card::before {
+            content: '⚠️';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 120px;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+
+        .rules-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: #dc2626;
+            margin-bottom: 25px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: shake 2s ease-in-out infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+            20%, 40%, 60%, 80% { transform: translateX(3px); }
+        }
+
+        .rules-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .rules-list li {
+            background: white;
+            padding: 18px 25px;
+            border-radius: 15px;
+            font-weight: 600;
+            color: #991b1b;
+            border-left: 5px solid #ef4444;
+            box-shadow: 0 4px 10px rgba(239, 68, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .rules-list li::before {
+            content: '❌';
+            font-size: 1.3rem;
+        }
+
+        .rules-list li:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.2);
+        }
+
+        .rules-list li:last-child {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: white;
+            font-weight: 700;
+            border-left-color: #7f1d1d;
+        }
+
+        .rules-list li:last-child::before {
+            content: '⛔';
+        }
+
+        /* TikTok Button */
+        .tiktok-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #000000, #1a1a1a);
+            color: white;
+            text-decoration: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin: 20px auto;
+            width: fit-content;
+        }
+
+        .tiktok-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .tiktok-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }        /* WL Gallery - Preview */
+        .wl-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .wl-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            border: 3px solid var(--primary);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: black;
+        }
+
+        .wl-item:hover {
+            transform: scale(1.05);
+            box-shadow: var(--glow);
+            z-index: 10;
+        }
+
+        .wl-item img,
+        .wl-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .wl-item-type {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+        }
+
+        .wl-item-text-only {
+            background: linear-gradient(135deg, var(--primary), var(--light-green));
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .wl-empty {
+            text-align: center;
+            color: var(--text-gray);
+            padding: 40px;
+            font-style: italic;
+            grid-column: 1 / -1;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .logo {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .card {
+                padding: 25px;
+            }
+            
+            .member-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+
+            .fullscreen-header h2 {
+                font-size: 1.3rem;
+            }
+
+            .fullscreen-content {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hamburger Menu -->
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="#home">🏠 Home</a></li>
+            <li><a href="#team-cowo">👥 Team Cowo</a></li>
+            <li><a href="#inti-lds">⭐ Inti LDS</a></li>
+            <li><a href="#info-wl">📸 Info WL</a></li>
+            <li><a href="#info-cc">📋 Info CC</a></li>
+            <li><a href="#rules">⚠️ Rules</a></li>
+        </ul>
+    </nav>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header" id="home">
+            <div class="logo-wrapper">
+                <img src="https://www.image2url.com/r2/default/images/1776606794112-7c8315a0-1d32-4183-8ea5-8d3d928197d5.jpg" alt="Logo CC 28 AREA" class="logo">
+            </div>
+            <h1 class="title">28 AREA</h1>
+            <p class="subtitle">Community Clan Official</p>
+        </header>
+
+        <!-- Team Cowo -->
+        <section class="card" id="team-cowo">
+            <h2 class="card-title">Team Cowo</h2>
+            <div class="member-grid" id="teamCowoList">
+                <div class="member-item">rafzz</div>
+                <div class="member-item">lukzz</div>
+                <div class="member-item">prhan</div>
+                <div class="member-item">adlii</div>
+                <div class="member-item">ridho</div>
+            </div>
+        </section>
+
+        <!-- Inti LDS -->
+        <section class="card" id="inti-lds">
+            <h2 class="card-title">Inti LDS</h2>
+            <div class="member-grid" id="intiLdsList">
+                <div class="member-item">oca</div>
+                <div class="member-item">qila</div>
+            </div>
+        </section>
+
+        <!-- Info WL - UPDATE FULL SCREEN -->
+        <section class="card" id="info-wl">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+                <h2 class="card-title" style="margin-bottom: 0;">Info WL</h2>
+                <button class="btn-fullscreen" onclick="openWLFullscreen()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                    </svg>
+                    Lihat Semua
+                </button>
+            </div>
+            
+            <!-- Gallery Preview - 3 item terakhir -->
+            <div class="wl-gallery" id="wlGallery">
+                <div class="wl-empty">Belum ada konten. Tambah lewat Admin Panel</div>
+            </div>
+        </section>
+
+        <!-- Info CC -->
+        <section class="card" id="info-cc">
+            <h2 class="card-title">Info CC</h2>
+            <ul class="info-list" id="infoCcList">
+                <li>
+                    <span class="info-label">Berdiri dari</span>
+                    <span class="info-value">01-04-2024</span>
+                </li>
+                <li>
+                    <span class="info-label">Founder</span>
+                    <span class="info-value">raff</span>
+                </li>
+                <li>
+                    <span class="info-label">Own B</span>
+                    <span class="info-value">lukzz alip</span>
+                </li>
+                <li>
+                    <span class="info-label">Own LDS</span>
+                    <span class="info-value">-1</span>
+                </li>
+                <li>
+                    <span class="info-label">Pengurus War</span>
+                    <span class="info-value">razz, ridho</span>
+                </li>
+                <li>
+                    <span class="info-label">Pengurus War LDS</span>
+                    <span class="info-value">oca ciwa</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Rules -->
+        <section class="rules-card" id="rules">
+            <h2 class="rules-title">RULES 28 AREA!!</h2>
+            <ul class="rules-list">
+                <li>No bisuu</li>
+                <li>Rajin war</li>
+                <li>No share link gb</li>
+                <li>Ga nimbrung 3 hari kick!!</li>
+            </ul>
+        </section>
+
+        <!-- TikTok Link -->
+        <section class="card" style="text-align: center;">
+            <h2 class="card-title" style="justify-content: center;">Link TT CC</h2>
+            <a href="https://www.tiktok.com/@ragage8?_r=1&_t=ZS-95eAyd86xJH" target="_blank" class="tiktok-btn">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 0 0 1 2.31-4.64 2.93 0 0 1 .88.13V9.4a6.84 0 0 0-1-.05A6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                </svg>
+                @ragage8
+            </a>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2024 CC 28 AREA - All Rights Reserved</p>
+            <p style="margin-top: 10px; font-size: 0.85rem;">Made with 💚 by 28 AREA Team</p>
+        </footer>
+    </div>
+
+    <!-- Modal Fullscreen WL -->
+    <div class="fullscreen-modal" id="wlFullscreen">
+        <div class="fullscreen-header">
+            <h2>📸 Info WL - Full Gallery</h2>
+            <button class="btn-close-fullscreen" onclick="closeWLFullscreen()">✕</button>
+        </div>
+        <div class="fullscreen-content" id="fullscreenContent">
+            <!-- Konten diisi JS -->
+        </div>
+    </div>
+
+    <script>
+        // Hamburger Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const menuLinks = document.querySelectorAll('.sidebar ul li a');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        });
+
+        // 3D Tilt Effect
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
+            });
+        });
+
+        // Ripple Effect
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = event.clientX - rect.left - size / 2;
+            const y = event.clientY - rect.top - size / 2;
+
+            ripple.style.cssText = `
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.6);
+                transform: scale(0);
+                animation: rippleAnim 0.6s linear;
+                pointer-events: none;
+                width: ${size}px;
+                height: ${size}px;
+                left: ${x}px;
+                top: ${y}px;
+            `;
+
+            button.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        document.querySelectorAll('.member-item, .tiktok-btn, .hamburger, .btn-fullscreen').forEach(element => {
+            element.style.position = 'relative';
+            element.style.overflow = 'hidden';
+            element.addEventListener('click', createRipple);
+        });
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes rippleAnim {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);        // Load WL Data - Support Gambar+Teks, Teks Doang, Video+Teks
+        function loadWLData() {
+            const wlItems = JSON.parse(localStorage.getItem('wlItems') || '[]');
+            const gallery = document.getElementById('wlGallery');
+
+            if (wlItems.length === 0) {
+                gallery.innerHTML = '<div class="wl-empty">Belum ada konten. Tambah lewat Admin Panel</div>';
+                return;
+            }
+
+            // Tampilkan 6 item terakhir di preview
+            const previewItems = wlItems.slice(-6).reverse();
+            gallery.innerHTML = '';
+
+            previewItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'wl-item';
+
+                if (item.type === 'image' || item.type === 'image-text') {
+                    div.innerHTML = `
+                        <img src="${item.media}" alt="WL Image">
+                        <span class="wl-item-type">${item.type === 'image-text'? '📸+📝' : '📸'}</span>
+                    `;
+                } else if (item.type === 'video' || item.type === 'video-text') {
+                    div.innerHTML = `
+                        <video src="${item.media}" muted></video>
+                        <span class="wl-item-type">${item.type === 'video-text'? '🎥+📝' : '🎥'}</span>
+                    `;
+                } else if (item.type === 'text') {
+                    div.className = 'wl-item wl-item-text-only';
+                    div.innerHTML = item.text.length > 80? item.text.substring(0, 80) + '...' : item.text;
+                }
+
+                div.onclick = () => openWLFullscreen();
+                gallery.appendChild(div);
+            });
+
+            // Load custom members
+            const teamCowo = JSON.parse(localStorage.getItem('teamCowo') || 'null');
+            if (teamCowo) {
+                const container = document.getElementById('teamCowoList');
+                container.innerHTML = '';
+                teamCowo.forEach(name => {
+                    const div = document.createElement('div');
+                    div.className = 'member-item';
+                    div.textContent = name;
+                    div.style.position = 'relative';
+                    div.style.overflow = 'hidden';
+                    div.addEventListener('click', createRipple);
+                    container.appendChild(div);
+                });
+            }
+
+            const intiLds = JSON.parse(localStorage.getItem('intiLds') || 'null');
+            if (intiLds) {
+                const container = document.getElementById('intiLdsList');
+                container.innerHTML = '';
+                intiLds.forEach(name => {
+                    const div = document.createElement('div');
+                    div.className = 'member-item';
+                    div.textContent = name;
+                    div.style.position = 'relative';
+                    div.style.overflow = 'hidden';
+                    div.addEventListener('click', createRipple);
+                    container.appendChild(div);
+                });
+            }
+
+            // Load Info CC
+            const infoCC = JSON.parse(localStorage.getItem('infoCC') || 'null');
+            if (infoCC) {
+                const list = document.getElementById('infoCcList');
+                list.innerHTML = `
+                    <li>
+                        <span class="info-label">Berdiri dari</span>
+                        <span class="info-value">${infoCC.berdiri || '01-04-2024'}</span>
+                    </li>
+                    <li>
+                        <span class="info-label">Founder</span>
+                        <span class="info-value">${infoCC.founder || 'raff'}</span>
+                    </li>
+                    <li>
+                        <span class="info-label">Own B</span>
+                        <span class="info-value">${infoCC.ownB || 'lukzz alip'}</span>
+                    </li>
+                    <li>
+                        <span class="info-label">Own LDS</span>
+                        <span class="info-value">${infoCC.ownLds || '-1'}</span>
+                    </li>
+                    <li>
+                        <span class="info-label">Pengurus War</span>
+                        <span class="info-value">${infoCC.pengurusWar || 'razz, ridho'}</span>
+                    </li>
+                    <li>
+                        <span class="info-label">Pengurus War LDS</span>
+                        <span class="info-value">${infoCC.pengurusWarLds || 'oca ciwa'}</span>
+                    </li>
+                `;
+            }
+        }
+
+        // Fullscreen WL Function
+        function openWLFullscreen() {
+            const wlItems = JSON.parse(localStorage.getItem('wlItems') || '[]');
+            const modal = document.getElementById('wlFullscreen');
+            const content = document.getElementById('fullscreenContent');
+
+            if (wlItems.length === 0) {
+                content.innerHTML = '<div style="text-align: center; color: white; padding: 60px; font-size: 1.2rem;">Belum ada konten WL</div>';
+            } else {
+                content.innerHTML = '';
+                wlItems.reverse().forEach((item, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'wl-item-full';
+                    div.style.animationDelay = (index * 0.1) + 's';
+
+                    let mediaHTML = '';
+                    if (item.type === 'image' || item.type === 'image-text') {
+                        mediaHTML = `<img src="${item.media}" alt="WL Image">`;
+                    } else if (item.type === 'video' || item.type === 'video-text') {
+                        mediaHTML = `<video src="${item.media}" controls></video>`;
+                    }
+
+                    let textHTML = '';
+                    if (item.type === 'text' || item.type === 'image-text' || item.type === 'video-text') {
+                        textHTML = `<div class="wl-item-text">${item.text}</div>`;
+                    }
+
+                    const date = new Date(item.timestamp || Date.now());
+                    const dateStr = date.toLocaleDateString('id-ID', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+
+                    div.innerHTML = `
+                        ${mediaHTML}
+                        ${textHTML}
+                        <div class="wl-item-date">📅 ${dateStr}</div>
+                    `;
+
+                    content.appendChild(div);
+                });
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeWLFullscreen() {
+            document.getElementById('wlFullscreen').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close fullscreen dengan ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeWLFullscreen();
+        });
+
+        // Load data pas halaman dibuka
+        loadWLData();
+
+        // Auto refresh kalo ada perubahan di localStorage
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'wlItems' || e.key === 'teamCowo' || e.key === 'intiLds' || e.key === 'infoCC') {
+                loadWLData();
+            }
+        });
+
+        // Console Easter Egg
+        console.log('%c🔥 CC 28 AREA 🔥', 'color: #16a34a; font-size: 24px; font-weight: bold;');
+        console.log('%cNo bisuu, rajin war!', 'color: #22c55e; font-size: 16px;');
+        console.log('%cInfo WL sekarang full screen + unlimited!', 'color: #6b7280; font-size: 12px;');
+    </script>
+</body>
+</html>
